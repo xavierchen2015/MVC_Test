@@ -18,12 +18,25 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage InsertBook(ReqInsertBooks entities)
+        public HttpResponseMessage InsertBook(ReqInsertBooks books)
         {
-            var context = Request;
-            var ddd = entities;
             var proc = new ProcData();
-            RspBook result = proc.InsertBooks(ddd.data);
+            RspBook result = proc.InsertBooks(books.data);
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, result);
+
+            if (result.code == "1")
+            {
+                response = Request.CreateResponse(HttpStatusCode.Forbidden, result);
+            }
+            return response;
+        }
+        [HttpDelete]
+        public HttpResponseMessage DelBook(string id)
+        {
+            var proc = new ProcData();
+            RspBook result = proc.DelBook(id);
+            
 
             var response = Request.CreateResponse(HttpStatusCode.OK, result);
 

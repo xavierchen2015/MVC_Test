@@ -40,5 +40,30 @@ namespace WebApi.Helpers
 
             return rsp;
         }
+        public RspBook DelBook(string id)
+        {
+            
+            RspBook rsp = new RspBook();
+
+            string InsertStr = "DELETE FROM Books WHERE Id= @Id";
+            try
+            {
+                string conStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["xdb"].ConnectionString;
+                using (var cn = new SQLiteConnection(conStr))
+                {
+                    cn.Execute(InsertStr, new { Id = new DbString { Value = id, IsFixedLength = true, Length = 3, IsAnsi = true } });
+                }
+                rsp.code = "0";
+                rsp.msg = "OK";
+            }
+            catch (Exception ex)
+            {
+                rsp.code = "1";
+                rsp.msg = $"DB insert error: {ex.Message}";
+                return rsp;
+            }
+
+            return rsp;
+        }
     }
 }
