@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC_Test.Helpers;
+using MVC_Test.Models;
 
 namespace MVC_Test.Controllers
 {
@@ -12,7 +13,12 @@ namespace MVC_Test.Controllers
         public ActionResult Index()
         {
             InitDB.InitData();
-            return View();
+
+            var data = new GetDataModule();
+            List<Books> aa = new List<Books>();
+            var ListBook = data.getAllBooks();
+            
+            return View(ListBook.OrderByDescending(e => e.Score));
         }
 
         public ActionResult About()
