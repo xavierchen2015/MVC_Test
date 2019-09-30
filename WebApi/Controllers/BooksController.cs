@@ -12,9 +12,19 @@ namespace WebApi.Controllers
     public class BooksController : ApiController
     {
         [HttpGet]
-        public IEnumerable<string> Get()
+        public HttpResponseMessage GetBookforId(string id)
         {
-            return new string[] { "value1", "value2" };
+            var proc = new ProcData();
+            RspBook result = proc.GetBookforId(id);
+
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, result);
+
+            if (result.code == "1")
+            {
+                response = Request.CreateResponse(HttpStatusCode.Forbidden, result);
+            }
+            return response;
         }
 
         [HttpPost]
@@ -37,6 +47,22 @@ namespace WebApi.Controllers
             var proc = new ProcData();
             RspBook result = proc.DelBook(id);
             
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, result);
+
+            if (result.code == "1")
+            {
+                response = Request.CreateResponse(HttpStatusCode.Forbidden, result);
+            }
+            return response;
+        }
+
+        [HttpPut]
+        public HttpResponseMessage UpdateBook(string id, ReqInsertBooks books)
+        {
+            var proc = new ProcData();
+            RspBook result = proc.UpdateBook(id, books.data);
+
 
             var response = Request.CreateResponse(HttpStatusCode.OK, result);
 
