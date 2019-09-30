@@ -27,9 +27,9 @@ namespace MVC_Test.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=d:\\db.sqlite")]
-        public string 設定connectionString {
+        public string connectionString {
             get {
-                return ((string)(this["設定connectionString"]));
+                return ((string)(this["connectionString"]));
             }
         }
     }
