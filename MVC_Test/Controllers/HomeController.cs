@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVC_Test.Helpers;
 using MVC_Test.Models;
+using Microsoft.Extensions.Logging;
 
 namespace MVC_Test.Controllers
 {
@@ -17,7 +18,7 @@ namespace MVC_Test.Controllers
             var data = new GetDataModule();
             List<Books> aa = new List<Books>();
             var ListBook = data.getAllBooks();
-            
+
             return View(ListBook.OrderByDescending(e => e.Score));
         }
 

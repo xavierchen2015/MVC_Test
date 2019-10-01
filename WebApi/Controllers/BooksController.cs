@@ -6,6 +6,10 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApi.Helpers;
 using WebApi.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using NLog.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Controllers
 {
@@ -14,6 +18,18 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetBookforId(string id)
         {
+
+            var services = new ServiceCollection();
+            services.AddLogging();
+            var provider = services.BuildServiceProvider();
+
+            var factory = provider.GetService<ILoggerFactory>();
+            factory.AddNLog();
+            factory.ConfigureNLog("nlog.config");
+
+            var logger = provider.GetService<ILogger<BooksController>>();
+            logger.LogCritical("hello nlog");
+
             var proc = new ProcData();
             RspBook result = proc.GetBookforId(id);
 
